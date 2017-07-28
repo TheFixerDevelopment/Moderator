@@ -16,7 +16,6 @@ use pocketmine\level\Position;
 
 class Main extends PluginBase implements Listener {
 
-
   public function onEnable() {
     $this->getServer()->getPluginManager()->registerEvents($this, $this);
     if(!(file_exists($this->getDataFolder()))) {
@@ -59,7 +58,7 @@ class Main extends PluginBase implements Listener {
     }
   }
 
-  public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) {
+  public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool {
     if(strtolower($cmd->getName()) === "report") {
       if(!(isset($args[0]) and isset($args[1]))) {
         $sender->sendMessage(TF::RED . "Error: not enough args. Usage: /report <player> <reason>");
