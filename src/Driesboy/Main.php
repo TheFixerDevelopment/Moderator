@@ -36,21 +36,21 @@ class Main extends PluginBase implements Listener {
   public function warn(Player $player, Player $sender , $reason){
 
     $player_name = $player->getName();
-    $file = file_get_contents($this->getDataFolder() . "Players/" . strtolower($player_name) . ".txt");
     if(!(file_exists($this->getDataFolder() . "Players/" . strtolower($player_name) . ".txt"))) {
       touch($this->getDataFolder() . "Players/" . strtolower($player_name) . ".txt");
       file_put_contents($this->getDataFolder() . "Players/" . strtolower($player_name) . ".txt", "1");
     }else{
+      $file = file_get_contents($this->getDataFolder() . "Players/" . strtolower($player_name) . ".txt");
       file_put_contents($this->getDataFolder() . "Players/" . strtolower($player_name) . ".txt", $file + 1);
     }
+    $file = file_get_contents($this->getDataFolder() . "Players/" . strtolower($player_name) . ".txt");
     if($file === "2") {
       $this->getServer()->dispatchCommand(new ConsoleCommandSender(),"nban " . $player_name . " 1day " . $reason);
 
       $sender->sendMessage(TF::GREEN . "" . $player_name . " has been BANNED for 1 day!");
     }
-    if($file >= "3") {
+    elseif($file >= "3") {
       $this->getServer()->dispatchCommand(new ConsoleCommandSender(),"nban " . $player_name . " 1week " . $reason);
-
       $sender->sendMessage(TF::GREEN . "" . $player_name . " has been BANNED for 1 week!");
     }else{
       $player->kick(TF::YELLOW . "You are warned for " . $reason . " by a Moderator", false);
@@ -59,7 +59,7 @@ class Main extends PluginBase implements Listener {
     }
   }
 
-  public function onCommand(CommandSender $sender, Command $cmd, $label, array $args) {
+  public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) {
     if(strtolower($cmd->getName()) === "report") {
       if(!(isset($args[0]) and isset($args[1]))) {
         $sender->sendMessage(TF::RED . "Error: not enough args. Usage: /report <player> <reason>");
