@@ -1,6 +1,6 @@
 name: Moderator
-version: 1.0.0
-api: [3.0.0-ALPHA7]
+version: 1.0.1
+api: [3.0.0]
 author: Driesboy
 main: Driesboy\Main
 commands:
